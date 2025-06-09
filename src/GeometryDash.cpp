@@ -7,20 +7,19 @@ GeometryDash::GeometryDash(std::string fileName) :
   _levelFile(fileName)
 {
   for (int i = 0; i <= SCREEN_BLOCKS_WIDTH + 1; ++i)
-    _objects.pushBack(new Block(Vertex(PIXELS_PER_BLOCK * i, WINDOW_HEIGHT - PIXELS_PER_BLOCK)));
+    _objects.pushBack(new Block(Vertex(PIXELS_PER_BLOCK * i, WINDOW_HEIGHT - PIXELS_PER_BLOCK / 2)));
 }
 
 void GeometryDash::update(double elapsed)
 {
-  Array<int> toRemove;
   for (int i = 0; i < _objects.getSize(); ++i)
-    if (_objects[i]->update(elapsed, _objects))
-      toRemove.pushBack(i);
-
-  for (auto i : toRemove)
   {
-    delete _objects[i];
-    _objects.remove(i);
+    if (_objects[i]->update(elapsed, _objects))
+    {
+      delete _objects[i];
+      _objects.remove(i);
+      i--;
+    }
   }
 
   if (_player.update(elapsed, _objects))
@@ -77,7 +76,7 @@ void GeometryDash::loadColumn()
     double y = atof(line.c_str()) * PIXELS_PER_BLOCK;
     std::getline(ss2, line, ' ');
     if (line == "block")
-      _objects.pushBack(new Block(Vertex(WINDOW_WIDTH + _blockCounter * PIXELS_PER_BLOCK - _elapsed * PIXELS_PER_BLOCK * SCROLL_SPEED + PIXELS_PER_BLOCK, y)));
+      _objects.pushBack(new Block(Vertex(WINDOW_WIDTH + _blockCounter * PIXELS_PER_BLOCK - _elapsed * PIXELS_PER_BLOCK * SCROLL_SPEED + PIXELS_PER_BLOCK, y + PIXELS_PER_BLOCK / 2)));
     else
       std::cout << "There was an invalid object type in level file.\n\n";
   }
