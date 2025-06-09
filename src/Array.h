@@ -77,8 +77,11 @@ public:
    *
    * @param copy: The Array to copy
    */
-  Array operator=(const Array& copy)
+  Array& operator=(const Array& copy)
   {
+    if (this == &copy)
+      return *this;
+
     // Delete the old memory
     delete[] _arr;
 
@@ -99,7 +102,7 @@ public:
    *
    * @param iList: The list of values to assign
    */
-  Array operator=(const std::initializer_list<T>& iList)
+  Array& operator=(const std::initializer_list<T>& iList)
   {
     // Delete the old memory
     delete[] _arr;
@@ -185,6 +188,8 @@ public:
    */
   int randomIndex() const
   {
+    if (_currentSize <= 0)
+      return 0;
     static std::random_device device;
     std::uniform_int_distribution<int> index(0, _currentSize - 1);
     return index(device);
@@ -196,7 +201,7 @@ public:
    * @param value: The element to be inserted
    * @param index: The index to insert into
    */
-  void insert(const T& value, unsigned int n)
+  void insert(const T& value, int n)
   {
     // Check for invalid index
     if (n < 0 or n > _currentSize)
@@ -205,26 +210,27 @@ public:
     // Optimize for inserting into the end
     if (n == _currentSize)
     {
+      if (_currentSize == _maxSize)
+        grow();
       // Assign the value
       _arr[n] = value;
 
       // Increment size, and check if new memory needs to be allocated
       _currentSize++;
-      if (_currentSize == _maxSize)
-        grow();
       return;
     }
 
     // Shift all elements up to the inserting index back one
     for (int i = _currentSize; i > n; --i)
       _arr[i] = _arr[i - 1];
+
+    if (_currentSize == _maxSize)
+      grow();
     // Assign the value
     _arr[n] = value;
 
     // Increment size, and check if new memory needs to be allocated
     _currentSize++;
-    if (_currentSize == _maxSize)
-      grow();
   }
 
   /**
@@ -252,7 +258,7 @@ public:
    *
    * @returns: The value that was removed
    */
-  T remove(unsigned int n)
+  T remove(int n)
   {
     // Check for invalid index
     if (n < 0 or n >= _currentSize or _currentSize <= 0)
@@ -267,7 +273,7 @@ public:
       _arr[i] = _arr[i + 1];
 
     // Check if memory can be deallocated
-    if (_currentSize <= _maxSize / 2)
+    if (_maxSize > 1 and _currentSize <= _maxSize / 2)
       shrink();
 
     // Return the removed value
@@ -376,7 +382,7 @@ private:
   void shrink()
   {
     // Halve the max size and allocate new memory
-    _maxSize /= 2;
+    _maxSize = std::max(1, _maxSize / 2);
     T* temp = new T[_maxSize];
 
     // Copy elements from old array
