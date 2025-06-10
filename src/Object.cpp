@@ -7,6 +7,7 @@ Object::Object(const Vertex& pos, double width, double height, std::string image
 {
   _image.setX(pos.first);
   _image.setY(pos.second);
+  _blockY = (pos.second - PIXELS_PER_BLOCK / 2) / PIXELS_PER_BLOCK;
 }
 
 bool Object::update(double elapsed, const Array<Object*>& objects)

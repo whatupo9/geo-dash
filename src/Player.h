@@ -8,6 +8,7 @@ class Player : public Object
 {
   double _velocity = 0.0;
   int _jumpFrames = 0;
+  bool _onGround = false;
 
 public:
   Player();

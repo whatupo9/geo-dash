@@ -9,27 +9,35 @@ Player::Player() :
 
 bool Player::update(double elapsed, const Array<Object*>& objects)
 {
-  bool jumped = false;
-  bool onBlock = isOnBlock(objects);
+  _blockY = (_image.getY() - PIXELS_PER_BLOCK / 2) / PIXELS_PER_BLOCK;
+  _onGround = isOnBlock(objects);
 
   // Jump if on block
-  if (_jumpFrames and onBlock)
+  if (_jumpFrames and _onGround)
   {
     _jumpFrames = 0;
     _velocity = JUMP_VELOCITY_PIXELS;
-    jumped = true;
+    _image.setY(_image.getY() + _velocity * elapsed);
+    return false; // Player didn't die
   }
 
-  if (not jumped) // Dont apply gravity on the same frame as a jump
-    _velocity += GRAVITY_PIXELS * elapsed;
-
+  _velocity += GRAVITY_PIXELS * elapsed;
   _image.setY(_image.getY() + _velocity * elapsed);
 
-  if (jumped)
-    return false; // The player did not die
+  for (auto i : objects)
+  {
+    double y = _image.getY();
+    double x = _image.getX();
+
+    bool collision = abs(x - i->getX()) < (_width / 2 + i->getWidth() / 2);
+    bool beside = _blockY == i->getBlockY();
+
+    if (collision and beside)
+      return true;
+  }
 
   bool alive = true;
-  if (not onBlock)
+  if (not _onGround)
   {
     for (auto i : objects)
     {
@@ -38,6 +46,7 @@ bool Player::update(double elapsed, const Array<Object*>& objects)
 
       bool above = abs(x - i->getX()) < (_width / 2 + i->getWidth() / 2);
       bool inside = abs(y - i->getY()) < (_height / 2 + i->getHeight() / 2);
+
       if (above and inside)
       {
         double diff = y - i->getY();
@@ -60,7 +69,7 @@ bool Player::update(double elapsed, const Array<Object*>& objects)
   if (_jumpFrames)
     _jumpFrames--;
 
-  bool onScreen = _image.getY() - _height / 2 > WINDOW_HEIGHT;
+  bool onScreen = (_image.getY() - _height / 2) > WINDOW_HEIGHT;
 
   return onScreen and alive;
 }

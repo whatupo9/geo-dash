@@ -12,6 +12,7 @@ protected:
   ICS_Sprite _image;
   double _width;
   double _height;
+  int _blockY = 0;
 
 public:
   Object() = default;
@@ -40,6 +41,11 @@ public:
   double getHeight() const
   {
     return _height;
+  }
+
+  int getBlockY() const
+  {
+    return _blockY;
   }
 };
 
