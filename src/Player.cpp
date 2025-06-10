@@ -93,3 +93,12 @@ bool Player::isOnBlock(const Array<Object*>& objects)
   }
   return false;
 }
+
+void Player::reset()
+{
+  _image.setX(PLAYER_STARTING_POS.first);
+  _image.setY(PLAYER_STARTING_POS.second);
+  _velocity = 0.0;
+  _jumpFrames = 0;
+  _onGround = false;
+}

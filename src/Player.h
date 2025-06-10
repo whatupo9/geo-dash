@@ -16,6 +16,7 @@ public:
   bool update(double elapsed, const Array<Object*>& objects) override;
   void jump();
   bool isOnBlock(const Array<Object*>& objects);
+  void reset();
 };
 
 #endif //! PLAYER_H

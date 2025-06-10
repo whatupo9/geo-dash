@@ -2,7 +2,7 @@
 #include "GeometryDash.h"
 #include "ICS_Game.h"
 
-GeometryDash gd("data/stereo_madness.lvl");
+GeometryDash gd;
 
 void update(float elapsed)
 {
