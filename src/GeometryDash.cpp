@@ -41,8 +41,8 @@ void GeometryDash::update(double elapsed)
 
   if (_elapsed / SECONDS_PER_BLOCK > _blockCounter)
   {
-    loadColumn();
     _blockCounter++;
+    loadColumn();
   }
 
   if (_jumping)
