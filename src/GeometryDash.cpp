@@ -12,6 +12,18 @@ GeometryDash::GeometryDash(std::string fileName) :
 
 void GeometryDash::update(double elapsed)
 {
+  if (_pauseTimer > elapsed)
+  {
+    _pauseTimer -= elapsed;
+    return;
+  }
+  else if (_pauseTimer > 0)
+  {
+    elapsed -= _pauseTimer;
+    _pauseTimer = 0.0;
+    restart();
+  }
+
   for (int i = 0; i < _objects.getSize(); ++i)
   {
     if (_objects[i]->update(elapsed, _objects))
@@ -23,7 +35,7 @@ void GeometryDash::update(double elapsed)
   }
 
   if (_player.update(elapsed, _objects))
-    restart();
+    _pauseTimer = DEATH_PAUSE_LENGTH;
 
   _elapsed += elapsed;
 
@@ -44,6 +56,8 @@ void GeometryDash::handleKeyEvent(int key, int eventType)
   case ICS_KEY_ESC:
     ICS_Game::getInstance().stop();
     break;
+  case ICS_KEY_W:
+  case ICS_KEY_UP:
   case ICS_KEY_SPACE:
     if (eventType == ICS_EVENT_PRESS)
       _jumping = true;
@@ -58,7 +72,6 @@ void GeometryDash::handleKeyEvent(int key, int eventType)
 
 void GeometryDash::restart()
 {
-  ICS_Game::getInstance().stop();
 }
 
 void GeometryDash::loadColumn()

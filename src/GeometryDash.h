@@ -14,6 +14,7 @@ class GeometryDash
   double _elapsed = 0.0;
   std::ifstream _levelFile;
   bool _jumping = false;
+  double _pauseTimer = 0.0;
 
 public:
   GeometryDash(std::string fileName);
