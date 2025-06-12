@@ -47,6 +47,12 @@ public:
   {
     return _blockY;
   }
+
+protected:
+  virtual bool isDeadly() const
+  {
+    return false;
+  }
 };
 
 #endif //! OBJECT_H

@@ -3,7 +3,13 @@
 
 GeometryDash::GeometryDash()
 {
-  _level = new Level(_currentLevelFile);
+  _level = new Level(_currentLevelName);
+}
+
+GeometryDash::~GeometryDash()
+{
+  if (_level)
+    delete _level;
 }
 
 void GeometryDash::update(double elapsed)
@@ -32,7 +38,7 @@ void GeometryDash::handleKeyEvent(int key, int eventType)
     ICS_Game::getInstance().stop();
     break;
   default:
-    _level->jump(key, eventType);
+    _level->handleKeyPress(key, eventType);
   };
 }
 
@@ -41,5 +47,5 @@ void GeometryDash::restart()
   _attempts++;
   if (_level)
     delete _level;
-  _level = new Level(_currentLevelFile);
+  _level = new Level(_currentLevelName);
 }

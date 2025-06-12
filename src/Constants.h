@@ -34,5 +34,6 @@ const Vertex PLAYER_STARTING_POS(PIXELS_PER_BLOCK * 8, PIXELS_PER_BLOCK * 8);
 
 const std::string BLOCK_FILE_NAME = "data/block.bmp";
 const std::string PLAYER_IMAGE_FILE = "data/player.bmp";
+const std::string SPIKE_FILE_NAME = "data/spike.bmp";
 
 #endif //! CONSTANTS_H

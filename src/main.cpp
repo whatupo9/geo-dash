@@ -39,5 +39,5 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
   ICS_Game::getInstance().setUpdateEventCallback(update);
 
   // start the game... the program ends when this function returns (when the game loop ends)
-  return ICS_Game::getInstance().go("Cube Simulator", WINDOW_WIDTH, WINDOW_HEIGHT);
+  return ICS_Game::getInstance().go("Cube Simulator", WINDOW_WIDTH, WINDOW_HEIGHT, true);
 }

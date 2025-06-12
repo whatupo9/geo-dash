@@ -448,7 +448,7 @@ ICS_Game::update()
 	float elapsed = currentTime - _lastTime;
 
 	// limit the framerate to 60 FPS
-	if (elapsed >= CLK_TCK / 60)
+	if (elapsed >= CLK_TCK / 50000)
 	{
 		// update the time for the next call
 		_lastTime = currentTime;

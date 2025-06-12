@@ -1,0 +1,32 @@
+#ifndef LEVEL_H
+#define LEVEL_H
+
+#include "Object.h"
+#include "Player.h"
+#include <fstream>
+
+class Level
+{
+  Array<Object*> _objects;
+  Player _player = Player();
+  std::string _name;
+  std::ifstream _file;
+
+  ICS_Sprite _background;
+
+  double _elapsed = 0.0;
+  int _blockCounter = 0;
+  bool _jumping = false;
+
+public:
+  Level(std::string name);
+  Level(const Level&) = delete;
+  Level& operator=(const Level&) = delete;
+  ~Level();
+
+  void handleKeyPress(int key, int eventType);
+  bool update(double elapsed);
+  void loadColumn();
+};
+
+#endif //! LEVEL_H
