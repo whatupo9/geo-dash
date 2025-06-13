@@ -23,22 +23,22 @@ public:
 
   virtual bool update(double elapsed, const Array<Object*>& objects);
 
-  double getX() const
+  virtual double getX() const
   {
     return _image.getX();
   }
 
-  double getY() const
+  virtual double getY() const
   {
     return _image.getY();
   }
 
-  double getWidth() const
+  virtual double getWidth() const
   {
     return _width;
   }
 
-  double getHeight() const
+  virtual double getHeight() const
   {
     return _height;
   }
@@ -48,7 +48,6 @@ public:
     return _blockY;
   }
 
-protected:
   virtual bool isDeadly() const
   {
     return false;

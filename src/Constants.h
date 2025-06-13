@@ -30,10 +30,19 @@ const double TERMINAL_VELOCITY_PIXELS = TERMINAL_VELOCITY * PIXELS_PER_BLOCK;
 
 const double DEATH_PAUSE_LENGTH = 0.5;
 
-const Vertex PLAYER_STARTING_POS(PIXELS_PER_BLOCK * 8, PIXELS_PER_BLOCK * 8);
+const double SPIKE_HITBOX_OFFSET_X = 0;
+const double SPIKE_HITBOX_OFFSET_Y = PIXELS_PER_BLOCK / 4;
+const double SPIKE_HITBOX_WIDTH = 8;
+const double SPIKE_HITBOX_HEIGHT = 20;
+
+const Vertex PLAYER_STARTING_POS(PIXELS_PER_BLOCK * 8, PIXELS_PER_BLOCK * 6);
+
+const int PLAYER_ON_BLOCK = 0;
+const int PLAYER_IN_AIR = 1;
+const int PLAYER_DEAD = 2;
 
 const std::string BLOCK_FILE_NAME = "data/block.bmp";
 const std::string PLAYER_IMAGE_FILE = "data/player.bmp";
-const std::string SPIKE_FILE_NAME = "data/spike.bmp";
+const std::string SPIKE_FILE_NAME = "data/spike.png";
 
 #endif //! CONSTANTS_H

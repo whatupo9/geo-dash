@@ -1,5 +1,6 @@
 #include "Level.h"
 #include "Block.h"
+#include "Spike.h"
 #include <sstream>
 
 Level::Level(std::string name) :
@@ -83,6 +84,8 @@ void Level::loadColumn()
     std::getline(ss2, line, ' ');
     if (line == "block")
       _objects.pushBack(new Block(Vertex(WINDOW_WIDTH + _blockCounter * PIXELS_PER_BLOCK - _elapsed * PIXELS_PER_BLOCK * SCROLL_SPEED + PIXELS_PER_BLOCK, y + PIXELS_PER_BLOCK / 2)));
+    else if (line == "spike")
+      _objects.pushBack(new Spike(Vertex(WINDOW_WIDTH + _blockCounter * PIXELS_PER_BLOCK - _elapsed * PIXELS_PER_BLOCK * SCROLL_SPEED + PIXELS_PER_BLOCK, y + PIXELS_PER_BLOCK / 2)));
     else
       std::cout << "There was an invalid object type in level file.\n\n";
   }
