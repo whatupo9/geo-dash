@@ -3,7 +3,7 @@
 
 GeometryDash::GeometryDash()
 {
-  _level = new Level(_currentLevelName);
+  _level = new Level(_currentLevelName, _attempts);
 }
 
 GeometryDash::~GeometryDash()
@@ -47,5 +47,5 @@ void GeometryDash::restart()
   _attempts++;
   if (_level)
     delete _level;
-  _level = new Level(_currentLevelName);
+  _level = new Level(_currentLevelName, _attempts);
 }

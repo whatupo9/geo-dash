@@ -6,7 +6,7 @@
 class GeometryDash
 {
   double _pauseTimer = 0.0;
-  int _attempts = 0;
+  int _attempts = 1;
   Level* _level = nullptr;
   std::string _currentLevelName = "data/stereo_madness";
 

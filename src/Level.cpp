@@ -2,13 +2,20 @@
 #include "Block.h"
 #include "Platform.h"
 #include "Spike.h"
+#include "itos.h"
 #include <sstream>
 
-Level::Level(std::string name) :
+Level::Level(std::string name, int attempts) :
   _name(name),
   _file(name + ".lvl"),
-  _background(name + ".png", WINDOW_WIDTH * 6, WINDOW_HEIGHT * 2)
+  _background(name + ".png", WINDOW_WIDTH * 6, WINDOW_HEIGHT * 2),
+  _attemptText("data/PUSAB___.otf", 44)
 {
+  _attemptText.setText("Attempt " + itos(attempts));
+  _attemptText.setPriority(1000);
+  _attemptText.setColor(255, 255, 255);
+  _attemptText.setPosition(WINDOW_WIDTH / 2.5, WINDOW_HEIGHT / 4.0);
+
   for (int i = 0; i <= SCREEN_BLOCKS_WIDTH + 1; ++i)
     _objects.pushBack(new Block(Vertex(PIXELS_PER_BLOCK * i, WINDOW_HEIGHT - PIXELS_PER_BLOCK / 2)));
   _background.setPriority(-999);
@@ -23,6 +30,7 @@ Level::~Level()
 
 bool Level::update(double elapsed)
 {
+  _attemptText.setX(_attemptText.getX() - SCROLL_SPEED * PIXELS_PER_BLOCK * elapsed);
   _background.setX(_background.getX() - SCROLL_SPEED * elapsed);
   for (int i = 0; i < _objects.getSize(); ++i)
   {
@@ -81,12 +89,12 @@ void Level::loadColumn()
     std::stringstream ss2;
     ss2 << line;
     std::getline(ss2, line, ' ');
-    double y = atof(line.c_str()) * PIXELS_PER_BLOCK;
+    double y = atof(line.c_str()) * PIXELS_PER_BLOCK + PIXELS_PER_BLOCK / 2;
     std::getline(ss2, line, ' ');
     if (line == "block")
-      _objects.pushBack(new Block(Vertex(WINDOW_WIDTH + _blockCounter * PIXELS_PER_BLOCK - _elapsed * PIXELS_PER_BLOCK * SCROLL_SPEED + PIXELS_PER_BLOCK, y + PIXELS_PER_BLOCK / 2)));
+      _objects.pushBack(new Block(Vertex(WINDOW_WIDTH + _blockCounter * PIXELS_PER_BLOCK - _elapsed * PIXELS_PER_BLOCK * SCROLL_SPEED + PIXELS_PER_BLOCK, y)));
     else if (line == "spike")
-      _objects.pushBack(new Spike(Vertex(WINDOW_WIDTH + _blockCounter * PIXELS_PER_BLOCK - _elapsed * PIXELS_PER_BLOCK * SCROLL_SPEED + PIXELS_PER_BLOCK, y + PIXELS_PER_BLOCK / 2)));
+      _objects.pushBack(new Spike(Vertex(WINDOW_WIDTH + _blockCounter * PIXELS_PER_BLOCK - _elapsed * PIXELS_PER_BLOCK * SCROLL_SPEED + PIXELS_PER_BLOCK, y)));
     else if (line == "platform")
       _objects.pushBack(new Platform(Vertex(WINDOW_WIDTH + _blockCounter * PIXELS_PER_BLOCK - _elapsed * PIXELS_PER_BLOCK * SCROLL_SPEED + PIXELS_PER_BLOCK, y)));
     else

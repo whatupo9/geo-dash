@@ -1,6 +1,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include "ICS_Text.h"
 #include "Object.h"
 #include "Player.h"
 #include <fstream>
@@ -12,6 +13,7 @@ class Level
   std::string _name;
   std::ifstream _file;
 
+  ICS_Text _attemptText;
   ICS_Sprite _background;
 
   double _elapsed = 0.0;
@@ -19,7 +21,7 @@ class Level
   bool _jumping = false;
 
 public:
-  Level(std::string name);
+  Level(std::string name, int attempts);
   Level(const Level&) = delete;
   Level& operator=(const Level&) = delete;
   ~Level();
