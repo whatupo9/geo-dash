@@ -10,7 +10,51 @@ Player::Player() :
 bool Player::update(double elapsed, const Array<Object*>& objects)
 {
   _blockY = (_image.getY() - PIXELS_PER_BLOCK / 2) / PIXELS_PER_BLOCK;
-  _onGround = isOnBlock(objects);
+
+  _onGround = false;
+  for (auto i : objects)
+  {
+    double x = _image.getX();
+    double y = _image.getY();
+
+    double xDiff = x - i->getX();
+    double yDiff = y - i->getY();
+
+    bool xCollide = (abs(xDiff) < (_width / 2 + i->getWidth() / 2));
+    bool yCollide = (abs(yDiff) < (_height / 2 + i->getHeight() / 2));
+
+    if (xCollide and yCollide)
+    {
+      // Hit head
+      if (yDiff > 0)
+      {
+        return true;
+      }
+
+      double xDest = i->getX() - (_width / 2 + i->getWidth() / 2);
+      double xToMove = abs(xDest - x);
+
+      double yDest = i->getY() - (_height / 2 + i->getHeight() / 2);
+      double yToMove = yDest - y;
+
+      // Hit spike
+      if (i->isDeadly())
+      {
+        return true;
+      }
+      // Hit wall
+      if (xToMove < yToMove)
+      {
+        return true;
+      }
+      else
+      {
+        _onGround = true;
+        _image.setY(yDest);
+        _velocity = 0.0;
+      }
+    }
+  }
 
   // Jump if on block
   if (_jumpFrames and _onGround)
@@ -24,54 +68,12 @@ bool Player::update(double elapsed, const Array<Object*>& objects)
   _velocity += GRAVITY_PIXELS * elapsed;
   _image.setY(_image.getY() + _velocity * elapsed);
 
-  for (auto i : objects)
-  {
-    double y = _image.getY();
-    double x = _image.getX();
-
-    bool collision = abs(x - i->getX()) < (_width / 2 + i->getWidth() / 2);
-    bool beside = _blockY == i->getBlockY();
-
-    if (collision and beside)
-      return true;
-  }
-
-  bool alive = true;
-  if (not _onGround)
-  {
-    for (auto i : objects)
-    {
-      double y = _image.getY();
-      double x = _image.getX();
-
-      bool above = abs(x - i->getX()) < (_width / 2 + i->getWidth() / 2);
-      bool inside = abs(y - i->getY()) < (_height / 2 + i->getHeight() / 2);
-
-      if (above and inside)
-      {
-        double diff = y - i->getY();
-        double shift = _height / 2 + i->getHeight() / 2;
-
-        if (diff < 0)
-        {
-          shift *= -1;
-          alive = false; // They hit their head
-        }
-
-        double newY = i->getY() + shift;
-        _image.setY(newY);
-
-        _velocity = 0.0;
-      }
-    }
-  }
-
   if (_jumpFrames)
     _jumpFrames--;
 
   bool onScreen = (_image.getY() - _height / 2) > WINDOW_HEIGHT;
 
-  return onScreen and alive;
+  return onScreen;
 }
 
 void Player::jump()
