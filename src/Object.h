@@ -17,7 +17,7 @@ protected:
 public:
   Object() = default;
 
-  Object(const Vertex& pos, double width, double height, std::string imageFile);
+  Object(const Vertex& pos, double width, double height, std::string imageFile = "blank");
 
   virtual ~Object() = default;
 

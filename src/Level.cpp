@@ -1,5 +1,7 @@
 #include "Level.h"
 #include "Block.h"
+#include "ICS_Game.h"
+#include "LevelEnd.h"
 #include "Platform.h"
 #include "Spike.h"
 #include "itos.h"
@@ -19,17 +21,40 @@ Level::Level(std::string name, int attempts) :
   for (int i = 0; i <= SCREEN_BLOCKS_WIDTH + 1; ++i)
     _objects.pushBack(new Block(Vertex(PIXELS_PER_BLOCK * i, WINDOW_HEIGHT - PIXELS_PER_BLOCK / 2)));
   _background.setPriority(-999);
+
+  if (not _file.is_open())
+  {
+    std::cout << "Could not open " << name << ".lvl\n";
+  }
+  else
+  {
+    std::string input = "";
+    getline(_file, input);
+    double x = atof(input.c_str());
+    _end = new LevelEnd(Vertex(WINDOW_WIDTH + x * PIXELS_PER_BLOCK + PIXELS_PER_BLOCK, WINDOW_HEIGHT / 2));
+  }
 }
 
 Level::~Level()
 {
   _file.close();
   for (auto i : _objects)
-    delete i;
+    if (i)
+      delete i;
+
+  if (_end)
+    delete _end;
 }
 
 bool Level::update(double elapsed)
 {
+  if (_restart)
+    return true;
+
+  if (_atEnd)
+    return false;
+
+  _end->update(elapsed, _objects);
   _attemptText.setX(_attemptText.getX() - SCROLL_SPEED * PIXELS_PER_BLOCK * elapsed);
   _background.setX(_background.getX() - SCROLL_SPEED * elapsed);
   for (int i = 0; i < _objects.getSize(); ++i)
@@ -44,6 +69,13 @@ bool Level::update(double elapsed)
 
   if (_player.update(elapsed, _objects))
     return true;
+
+  double distToEnd = _end->getX() - _player.getX();
+  if (distToEnd < _end->getWidth() / 2 + _player.getWidth() / 2)
+  {
+    _atEnd = true;
+    return false;
+  }
 
   _elapsed += elapsed;
 
@@ -63,14 +95,29 @@ void Level::handleKeyPress(int key, int eventType)
 {
   switch (key)
   {
+  case ICS_KEY_ESC:
+    ICS_Game::getInstance().stop();
+    break;
   case ICS_KEY_W:
   case ICS_KEY_UP:
-  case ICS_KEY_SPACE:
     if (eventType == ICS_EVENT_PRESS)
       _jumping = true;
     else
       _jumping = false;
     break;
+  case ICS_KEY_SPACE:
+    if (_atEnd)
+    {
+      _restart = true;
+    }
+    else
+    {
+      if (eventType == ICS_EVENT_PRESS)
+        _jumping = true;
+      else
+        _jumping = false;
+      break;
+    }
   };
 
   if (_jumping)

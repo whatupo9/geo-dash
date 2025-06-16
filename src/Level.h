@@ -2,6 +2,7 @@
 #define LEVEL_H
 
 #include "ICS_Text.h"
+#include "LevelEnd.h"
 #include "Object.h"
 #include "Player.h"
 #include <fstream>
@@ -10,6 +11,7 @@ class Level
 {
   Array<Object*> _objects;
   Player _player = Player();
+  LevelEnd* _end = nullptr;
   std::string _name;
   std::ifstream _file;
 
@@ -19,6 +21,9 @@ class Level
   double _elapsed = 0.0;
   int _blockCounter = 0;
   bool _jumping = false;
+
+  bool _atEnd = false;
+  bool _restart = false;
 
 public:
   Level(std::string name, int attempts);

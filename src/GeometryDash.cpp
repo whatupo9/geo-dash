@@ -1,5 +1,4 @@
 #include "GeometryDash.h"
-#include "ICS_Game.h"
 
 GeometryDash::GeometryDash()
 {
@@ -32,14 +31,7 @@ void GeometryDash::update(double elapsed)
 
 void GeometryDash::handleKeyEvent(int key, int eventType)
 {
-  switch (key)
-  {
-  case ICS_KEY_ESC:
-    ICS_Game::getInstance().stop();
-    break;
-  default:
-    _level->handleKeyPress(key, eventType);
-  };
+  _level->handleKeyPress(key, eventType);
 }
 
 void GeometryDash::restart()
