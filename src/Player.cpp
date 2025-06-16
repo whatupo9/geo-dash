@@ -35,7 +35,7 @@ bool Player::update(double elapsed, const Array<Object*>& objects)
       double xToMove = abs(xDest - x);
 
       double yDest = i->getY() - (_height / 2 + i->getHeight() / 2);
-      double yToMove = yDest - y;
+      double yToMove = abs(yDest - y);
 
       // Hit spike
       if (i->isDeadly())
