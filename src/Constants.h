@@ -38,6 +38,7 @@ const double SPIKE_HITBOX_HEIGHT = 24;
 const Vertex PLAYER_STARTING_POS(PIXELS_PER_BLOCK * 8, PIXELS_PER_BLOCK * 6);
 
 const std::string BLOCK_FILE_NAME = "data/block.bmp";
+const std::string PLATFORM_FILE_NAME = "data/platform.bmp";
 const std::string PLAYER_IMAGE_FILE = "data/player.bmp";
 const std::string SPIKE_FILE_NAME = "data/spike.png";
 
