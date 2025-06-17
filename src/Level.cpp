@@ -13,17 +13,27 @@ Level::Level(std::string name, int attempts) :
   _background(name + ".png", WINDOW_WIDTH * 6.0, WINDOW_HEIGHT * 2.0),
   _attemptText("data/PUSAB___.otf", 44),
   _endMenu(LEVEL_COMPLETE_FILE_NAME, END_MENU_WIDTH_PIXELS, END_MENU_HEIGHT_PIXELS),
-  _endText("data/PUSAB___.otf", 34)
+  _endText("data/PUSAB___.otf", 34),
+  _endText2("data/PUSAB___.otf", 34)
 {
 
   _endMenu.setVisible(false);
   _endMenu.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0));
   _endMenu.setPriority(1000);
+
   _endText.setVisible(false);
+  _endText.setColor(END_MENU_TEXT_COLOUR);
   _endText.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0));
   _endText.setText("Space-Restart    Escape-Exit");
   _endText.setAnchor(0.5, 0.5);
-  _endText.setPriority(1000);
+  _endText.setPriority(1001);
+
+  _endText2.setVisible(false);
+  _endText2.setColor(END_MENU_TEXT_COLOUR);
+  _endText2.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0 + 34));
+  _endText2.setText("Space-Restart    Escape-Exit");
+  _endText2.setAnchor(0.5, 0.5);
+  _endText2.setPriority(1001);
 
   _attemptText.setText("Attempt " + itos(attempts));
   _attemptText.setPriority(1000);
@@ -87,6 +97,7 @@ bool Level::update(double elapsed)
   {
     _atEnd = true;
     _endText.setVisible(true);
+    _endText2.setVisible(true);
     _endMenu.setVisible(true);
     return false;
   }

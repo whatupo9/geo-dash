@@ -1,6 +1,7 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include "ICS_Color.h"
 #include <string>
 #include <utility>
 
@@ -50,5 +51,7 @@ const std::string PLATFORM_FILE_NAME = "data/platform.bmp";
 const std::string PLAYER_IMAGE_FILE = "data/player.bmp";
 const std::string SPIKE_FILE_NAME = "data/spike.png";
 const std::string LEVEL_COMPLETE_FILE_NAME = "data/level_complete.png";
+
+const ICS_Color END_MENU_TEXT_COLOUR = ICS_Color(253, 208, 48);
 
 #endif //! CONSTANTS_H

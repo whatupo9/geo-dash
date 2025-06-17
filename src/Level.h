@@ -17,6 +17,7 @@ class Level
 
   ICS_Text _attemptText;
   ICS_Text _endText;
+  ICS_Text _endText2;
   ICS_Sprite _background;
   ICS_Sprite _endMenu;
 
