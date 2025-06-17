@@ -68,7 +68,7 @@ bool Level::update(double elapsed)
 
   _end->update(elapsed, _objects);
   _attemptText.setX(_attemptText.getX() - SCROLL_SPEED * PIXELS_PER_BLOCK * elapsed);
-  _background.setX(_background.getX() - SCROLL_SPEED * elapsed);
+  _background.setX(_background.getX() - BACKGROUND_SCROLL_SPEED_PIXELS * elapsed);
   for (int i = 0; i < _objects.getSize(); ++i)
   {
     if (_objects[i]->update(elapsed, _objects))
