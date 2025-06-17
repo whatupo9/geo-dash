@@ -12,19 +12,21 @@ class Level
   Array<Object*> _objects;
   Player _player = Player();
   LevelEnd* _end = nullptr;
+
   std::string _name;
   std::ifstream _file;
 
   ICS_Text _attemptText;
   ICS_Text _endText;
   ICS_Text _endText2;
+
   ICS_Sprite _background;
   ICS_Sprite _endMenu;
 
   double _elapsed = 0.0;
   int _blockCounter = 0;
-  bool _jumping = false;
 
+  bool _jumping = false;
   bool _atEnd = false;
   bool _restart = false;
 

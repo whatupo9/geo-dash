@@ -23,15 +23,15 @@ Level::Level(std::string name, int attempts) :
 
   _endText.setVisible(false);
   _endText.setColor(END_MENU_TEXT_COLOUR);
-  _endText.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0));
+  _endText.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0 + 34));
   _endText.setText("Space-Restart    Escape-Exit");
   _endText.setAnchor(0.5, 0.5);
   _endText.setPriority(1001);
 
   _endText2.setVisible(false);
   _endText2.setColor(END_MENU_TEXT_COLOUR);
-  _endText2.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0 + 34));
-  _endText2.setText("Space-Restart    Escape-Exit");
+  _endText2.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0 - 44));
+  _endText2.setText("Attemps " + itos(attempts));
   _endText2.setAnchor(0.5, 0.5);
   _endText2.setPriority(1001);
 
