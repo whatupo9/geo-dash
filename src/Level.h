@@ -16,7 +16,9 @@ class Level
   std::ifstream _file;
 
   ICS_Text _attemptText;
+  ICS_Text _endText;
   ICS_Sprite _background;
+  ICS_Sprite _endMenu;
 
   double _elapsed = 0.0;
   int _blockCounter = 0;

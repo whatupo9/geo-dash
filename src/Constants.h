@@ -35,11 +35,18 @@ const double SPIKE_HITBOX_OFFSET_Y = PIXELS_PER_BLOCK / 4;
 const double SPIKE_HITBOX_WIDTH = 16;
 const double SPIKE_HITBOX_HEIGHT = 24;
 
+const double END_MENU_WIDTH = 1102;
+const double END_MENU_HEIGHT = 838;
+const double END_MENU_RATIO = END_MENU_WIDTH / END_MENU_HEIGHT;
+const double END_MENU_WIDTH_PIXELS = WINDOW_WIDTH / 3.0 * 2.0;
+const double END_MENU_HEIGHT_PIXELS = END_MENU_WIDTH_PIXELS / END_MENU_RATIO;
+
 const Vertex PLAYER_STARTING_POS(PIXELS_PER_BLOCK * 8, PIXELS_PER_BLOCK * 6);
 
 const std::string BLOCK_FILE_NAME = "data/block.bmp";
 const std::string PLATFORM_FILE_NAME = "data/platform.bmp";
 const std::string PLAYER_IMAGE_FILE = "data/player.bmp";
 const std::string SPIKE_FILE_NAME = "data/spike.png";
+const std::string LEVEL_COMPLETE_FILE_NAME = "data/level_complete.png";
 
 #endif //! CONSTANTS_H

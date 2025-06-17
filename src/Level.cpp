@@ -10,9 +10,21 @@
 Level::Level(std::string name, int attempts) :
   _name(name),
   _file(name + ".lvl"),
-  _background(name + ".png", WINDOW_WIDTH * 6, WINDOW_HEIGHT * 2),
-  _attemptText("data/PUSAB___.otf", 44)
+  _background(name + ".png", WINDOW_WIDTH * 6.0, WINDOW_HEIGHT * 2.0),
+  _attemptText("data/PUSAB___.otf", 44),
+  _endMenu(LEVEL_COMPLETE_FILE_NAME, END_MENU_WIDTH_PIXELS, END_MENU_HEIGHT_PIXELS),
+  _endText("data/PUSAB___.otf", 34)
 {
+
+  _endMenu.setVisible(false);
+  _endMenu.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0));
+  _endMenu.setPriority(1000);
+  _endText.setVisible(false);
+  _endText.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0));
+  _endText.setText("Space-Restart    Escape-Exit");
+  _endText.setAnchor(0.5, 0.5);
+  _endText.setPriority(1000);
+
   _attemptText.setText("Attempt " + itos(attempts));
   _attemptText.setPriority(1000);
   _attemptText.setColor(255, 255, 255);
@@ -74,6 +86,8 @@ bool Level::update(double elapsed)
   if (distToEnd < _end->getWidth() / 2 + _player.getWidth() / 2)
   {
     _atEnd = true;
+    _endText.setVisible(true);
+    _endMenu.setVisible(true);
     return false;
   }
 
