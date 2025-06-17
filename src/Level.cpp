@@ -14,8 +14,10 @@ Level::Level(std::string name, int attempts) :
   _attemptText("data/PUSAB___.otf", 44),
   _endMenu(LEVEL_COMPLETE_FILE_NAME, END_MENU_WIDTH_PIXELS, END_MENU_HEIGHT_PIXELS),
   _endText("data/PUSAB___.otf", 34),
-  _endText2("data/PUSAB___.otf", 34)
+  _endText2("data/PUSAB___.otf", 44),
+  _sound()
 {
+  _track = _sound.streamSound(name + ".mp3");
 
   _endMenu.setVisible(false);
   _endMenu.setPosition(ICS_Pair<float>(WINDOW_WIDTH / 2.0, WINDOW_HEIGHT / 2.0));
@@ -59,6 +61,8 @@ Level::Level(std::string name, int attempts) :
 
 Level::~Level()
 {
+  _sound.stopSound(_track);
+
   _file.close();
   for (auto i : _objects)
     if (i)

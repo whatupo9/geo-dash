@@ -2,6 +2,7 @@
 #define LEVEL_H
 
 #include "ICS_Text.h"
+#include "ICS_Sound.h"
 #include "LevelEnd.h"
 #include "Object.h"
 #include "Player.h"
@@ -22,6 +23,9 @@ class Level
 
   ICS_Sprite _background;
   ICS_Sprite _endMenu;
+
+  ICS_Sound _sound;
+  int _track = 0;
 
   double _elapsed = 0.0;
   int _blockCounter = 0;
