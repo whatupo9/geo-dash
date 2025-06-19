@@ -25,6 +25,11 @@ public:
     _arr = new T[_maxSize];
   }
 
+  /**
+   * Parameterized Constructor
+   *
+   * @param size: The amount of objects to allocate
+   */
   Array(int size) :
     _garbage(),
     _maxSize(size)
@@ -151,21 +156,41 @@ public:
     return _garbage;
   }
 
+  /**
+   * The beginning of the array
+   *
+   * @returns A pointer to the first array element
+   */
   T* begin()
   {
     return _arr;
   }
 
+  /**
+   * The end of the array
+   *
+   * @returns A pointer to the element after the last array element
+   */
   T* end()
   {
     return _arr + _currentSize;
   }
 
+  /**
+   * The beginning of the array
+   *
+   * @returns A const pointer to the first array element
+   */
   const T* begin() const
   {
     return _arr;
   }
 
+  /**
+   * The end of the array
+   *
+   * @returns A const pointer to the element after the last array element
+   */
   const T* end() const
   {
     return _arr + _currentSize;

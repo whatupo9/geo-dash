@@ -2,16 +2,24 @@
 #include "GeometryDash.h"
 #include "ICS_Game.h"
 
-GeometryDash gd;
+// Game
+// (Can't be an object, because of race condition when initializing global variables)
+GeometryDash* gd = nullptr;
 
 void update(float elapsed)
 {
-  gd.update(elapsed);
+  gd->update(elapsed);
 }
 
 void handleKeyboardEvent(int key, int eventType)
 {
-  gd.handleKeyEvent(key, eventType);
+  gd->handleKeyEvent(key, eventType);
+}
+
+void handleExit()
+{
+  if (gd)
+    delete gd;
 }
 
 /**
@@ -31,10 +39,10 @@ int main()
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 #endif
 {
+  // Allocate a new game object
+  gd = new GeometryDash;
   // create the game and set the callbacks
-  // ICS_Game::getInstance().setMouseMoveEventCallback(handleMouseMove);          // set the callback for handling mouse move events
-  // ICS_Game::getInstance().setMouseWheelEventCallback(handleMouseWheel);        // set the callback for handling mouse wheel events
-  // ICS_Game::getInstance().setMouseButtonEventCallback(handleMouseButtonEvent); // set callback for mouse button events
+  ICS_Game::getInstance().setExitEventCallback(handleExit);
   ICS_Game::getInstance().setKeyboardEventCallback(handleKeyboardEvent);
   ICS_Game::getInstance().setUpdateEventCallback(update);
 

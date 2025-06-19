@@ -6,6 +6,11 @@
 class Platform : public Block
 {
 public:
+  /**
+   * Platform Constructor
+   *
+   * @param pos: The position of the object on the screen
+   */
   Platform(const Vertex& pos);
 };
 
