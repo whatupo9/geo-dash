@@ -7,7 +7,7 @@
 #include "itos.h"
 #include <sstream>
 
-Level::Level(std::string name, int attempts) :
+Level::Level(std::string name, int attempts, int length) :
   _name(name),
   _file(name + ".lvl"),
   _background(name + ".png", WINDOW_WIDTH * 6.0, WINDOW_HEIGHT * 2.0),
